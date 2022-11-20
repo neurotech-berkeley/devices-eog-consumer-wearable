@@ -18,7 +18,7 @@ int max_y = screen_height - 50;
 int last_x = min_x;
 int last_y = min_y;
 int curr_x = min_x;
-int curr_y = min_ys;
+int curr_y = min_y;
 
 bool move = true;
 time_t seconds = time(NULL);
@@ -29,8 +29,8 @@ int time_diff = 0;
 USBMouse mouse;
 
 void window_switch(int eye_x, int eye_y) {
-  mouse.move(eye_x, eye_y);
-  mouse.click();
+  mouse.move(0, 40);
+  mouse.click(MOUSE_LEFT);
 }
 
 void setup() {
@@ -50,7 +50,12 @@ void loop() {
   Serial.print(" ");
   Serial.println(curr_y);
 
-  move = last_x != curr_x || last_y != curr_y;
+  if(curr_x > 100) {
+    window_switch(curr_x, curr_y);
+  }
+  //move = last_x != curr_x || last_y != curr_y;
+  
+  /*
   if(move) {
     last_move_time = time(NULL);
   }
@@ -58,9 +63,10 @@ void loop() {
     now = time(NULL);
     time_diff = now - last_move_time;
     if(time_diff >= GAZE_THRESHOLD) {
-      window_switch(curr_x, curr_y)
+      window_switch(curr_x, curr_y);
     }
   }
+  */
   delay(3);
 }
 
