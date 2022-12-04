@@ -29,7 +29,8 @@ int time_diff = 0;
 USBMouse mouse;
 
 void window_switch(int eye_x, int eye_y) {
-  mouse.move(0, 40);
+  mouse.move(1920, 1080);
+  mouse.move(-(1920 - eye_x), -(1080 - eye_y));
   mouse.click(MOUSE_LEFT);
 }
 
@@ -50,8 +51,9 @@ void loop() {
   Serial.print(" ");
   Serial.println(curr_y);
 
-  if(curr_x > 100) {
+  if(curr_x > 800 || curr_x < 200 || curr_y > 800 || curr_y < 200) {
     window_switch(curr_x, curr_y);
+    delay(300);
   }
   //move = last_x != curr_x || last_y != curr_y;
   
@@ -67,6 +69,6 @@ void loop() {
     }
   }
   */
-  delay(3);
+  delay(500);
 }
 
